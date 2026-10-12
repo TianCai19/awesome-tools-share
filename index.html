@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精选工具分享</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f8fafc; }
+        .tag { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; }
+        .tag-level-1 { background-color: #dbeafe; color: #1e40af; }
+        .tag-level-2 { background-color: #f3e8ff; color: #6b21a8; }
+        .tag-level-3 { background-color: #dcfce3; color: #166534; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen">
+    <div id="app" class="max-w-5xl mx-auto px-4 py-12">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight mb-4">✨ 精选好用工具分享</h1>
+            <p class="text-lg text-gray-600">发现、收集并分享那些解决实际痛点的高效工具。</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <article v-for="tool in tools" :key="tool.name" class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 overflow-hidden flex flex-col">
+                <div class="p-6 flex-grow">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-2xl font-bold text-gray-900">{{ tool.name }}</h2>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span v-for="(tag, index) in tool.tags" :key="tag" :class="['tag', `tag-level-${index + 1}`]">
+                            {{ tag }}
+                        </span>
+                    </div>
+                    <div class="mb-5">
+                        <h3 class="text-sm font-bold text-red-500 uppercase tracking-wider mb-2 flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            痛点
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">{{ tool.painPoint }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-blue-500 uppercase tracking-wider mb-2 flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            解决与介绍
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">{{ tool.description }}</p>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 mt-auto">
+                    <a :href="tool.link" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full bg-black text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200">
+                        访问工具
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <script>
+        const { createApp } = Vue
+
+        createApp({
+            data() {
+                return {
+                    tools: [
+                        {
+                            name: 'NoDup',
+                            tags: ['效率工具', '浏览器插件', '标签页管理'],
+                            painPoint: '每次在对话或文档里点开链接都会新开一个标签，而不是去原来Chrome的位置找，导致Tab越来越多堆积如山，无法管理并陷入恶性循环。',
+                            description: '直接跳转到已经打开的同名标签页而不是新开一个，有效防止标签页重复堆积，也方便快速回到Tab所在的项目上下文。',
+                            link: 'https://chromewebstore.google.com/detail/nodup/jakomjnpemmaphhfialgbehagbcmaagh?'
+                        },
+                        {
+                            name: 'Homebrew',
+                            tags: ['开发工具', '包管理器', '系统增强'],
+                            painPoint: 'macOS 原生缺少统一的软件和依赖包管理工具，开发环境中手动下载、解压、配置环境变量非常繁琐且难以更新维护。',
+                            description: 'macOS（或 Linux）缺失的包管理器。通过简单的命令行即可安装、更新和管理各种常用软件包，让环境配置变得无比轻松。',
+                            link: 'https://brew.sh/'
+                        }
+                    ]
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
